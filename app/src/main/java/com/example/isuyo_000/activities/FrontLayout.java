@@ -30,5 +30,8 @@ public class FrontLayout extends AppCompatActivity {
                         .show();
             }
         });
+
+        //retrieve stored data through Intent
+        int age = getIntent().getIntExtra("user-age", -1);
     }
 }

@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), FrontLayout.class);
                 intent.putExtra("user-age", 30);
                 intent.putExtra("user-name", "Roman");
+                intent.putExtra("selectedUser", new User(-1, new double[32]));
+                //TODO normalize default user in program
                 startActivity(intent);
             }
         });

@@ -16,13 +16,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FrontLayout"
+            android:label="@string/title_front_layout"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".UserList"
+            android:label="@string/title_userList"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ChannelLimits"></activity>
     </application>
-
-    <activity android:name=".ActivityTwo" >
-        <!--Default Intent Filter-->
-        <intent-filter>
-            <action android:name="android.intent.action.DEFAULT" />
-        </intent-filter>
-    </activity>
 
 </manifest>

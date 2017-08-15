@@ -41,6 +41,16 @@ public class UserList extends AppCompatActivity {
         //create/find list of items
         String[] myItems = {"Blue", "Green", "Purple", "Red"};
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(getApplicationContext(),
+                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
+                        .show();
+            }
+        });
+
         //Build adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.line_basic,
@@ -50,7 +60,6 @@ public class UserList extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new listSelect());
     }
-
     //determines the occurance of selecting an item from the user list
     private class listSelect implements AdapterView.OnItemClickListener{
 

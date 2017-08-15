@@ -1,6 +1,8 @@
 package com.example.isuyo_000.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,24 +16,31 @@ import android.widget.Toast;
 
 public class FrontLayout extends AppCompatActivity {
 
+    User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.front_layout);
+        //retrieve stored data through Intent
+        //int age = getIntent().getIntExtra("user-age", -1);
 
-        ListView listView = (ListView) findViewById(R.id.userList);
+        User p = (User) getIntent().getExtras().get("selectedUser");
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        user = getIntent().getParcelableExtra("selectedUser");
+
+        Button toUsersScreen = (Button) findViewById(R.id.toUsers);
+
+        toUsersScreen.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                Toast.makeText(getApplicationContext(),
-                        "Click ListItem Number " + position, Toast.LENGTH_LONG)
-                        .show();
+            public void onClick(View arg0){
+                Intent intent = new Intent(getApplicationContext(), UserList.class);
+                intent.putExtra("userSelected", user);
+                //TODO normalize default user in program
+                startActivity(intent);
             }
         });
-
-        //retrieve stored data through Intent
-        int age = getIntent().getIntExtra("user-age", -1);
     }
+
+
 }

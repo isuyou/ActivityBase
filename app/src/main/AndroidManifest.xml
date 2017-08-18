@@ -29,6 +29,7 @@
             android:label="@string/title_userList"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ChannelLimits"></activity>
+
     </application>
 
 </manifest>

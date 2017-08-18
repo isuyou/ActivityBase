@@ -40,6 +40,18 @@ public class FrontLayout extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button toSettingsScreen = (Button) findViewById(R.id.toSettings);
+
+        toSettingsScreen.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View arg0){
+                Intent intent = new Intent(getApplicationContext(), ChannelLimits.class);
+                intent.putExtra("userSelected", user);
+                //TODO normalize default user in program
+                startActivity(intent);
+            }
+        });
     }
 
 

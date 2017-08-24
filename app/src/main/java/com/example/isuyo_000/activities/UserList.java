@@ -6,6 +6,7 @@ package com.example.isuyo_000.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,6 +23,8 @@ import java.util.List;
 
 
 public class UserList extends AppCompatActivity {
+
+    private User user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,29 @@ public class UserList extends AppCompatActivity {
                     "which is string: " + textView.getText().toString();
             Toast.makeText(UserList.this, message, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == RESULT_OK){
+            if (data.hasExtra("selectedUser")) {
+                user = (data.getExtras().getParcelable("selectedUser"));
+                Toast.makeText(
+                        this,
+                        "User found is :  " + user.getID(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    //returns User selected to FrontLayout
+    @Override
+    public void onBackPressed(){
+        Intent data = new Intent();
+        data.putExtra("selectedUser", user);
+        // Activity finished ok, return the data
+        setResult(RESULT_OK, data);
+        finish();
     }
 }
 

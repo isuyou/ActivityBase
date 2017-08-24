@@ -6,8 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_CODE = 230;
+
+    private User user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,5 +31,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == RESULT_OK){
+            if (data.hasExtra("selectedUser")) {
+                user = (data.getExtras().getParcelable("selectedUser"));
+                Toast.makeText(
+                        this,
+                        "User found is :  " + user.getID(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

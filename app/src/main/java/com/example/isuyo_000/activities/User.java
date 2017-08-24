@@ -24,6 +24,9 @@ public class User implements Parcelable {
 
     //TODO
     //Getters and Setters
+    public int getID(){
+        return id;
+    }
 
     // Parcelling part
     public User(Parcel in){

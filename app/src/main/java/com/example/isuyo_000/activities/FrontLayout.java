@@ -54,5 +54,28 @@ public class FrontLayout extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == RESULT_OK){
+            if (data.hasExtra("selectedUser")) {
+                user = (data.getExtras().getParcelable("selectedUser"));
+                Toast.makeText(
+                        this,
+                        "User found is :  " + user.getID(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    //Returns User selected to MainActivity
+    @Override
+    public void onBackPressed(){
+        Intent data = new Intent();
+        data.putExtra("selectedUser", user);
+        // Activity finished ok, return the data
+        setResult(RESULT_OK, data);
+        finish();
+    }
+
 
 }

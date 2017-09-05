@@ -1,10 +1,7 @@
-package com.example.isuyo_000.activities;
+package com.example.isuyo_000.activities.UserData;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by isuyo_000 on 8/8/2017.
@@ -16,14 +13,26 @@ public class User implements Parcelable {
     private double[] limits;
 
     // Constructor
-    public User(int id, double[] limits) {
+    public User(int id, double[] newLimits) {
         this.id = id;
-        this.limits = limits;
+        limits = new double[32];
+        for(int i = 0; i < limits.length && i < newLimits.length; i++){
+            limits[i] = newLimits[i];
+        }
     }
+
+
 
 
     //TODO
     //Getters and Setters
+    public int getID(){
+        return id;
+    }
+
+    public double[] getLimits(){
+        return limits;
+    }
 
     // Parcelling part
     public User(Parcel in){

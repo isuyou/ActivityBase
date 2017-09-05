@@ -25,7 +25,7 @@
             android:label="@string/title_front_layout"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".UserList"
+            android:name=".UserData.UserList"
             android:label="@string/title_userList"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ChannelLimits"></activity>

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.isuyo_000.activities.Graph.PlotGraph;
 import com.example.isuyo_000.activities.UserData.User;
 import com.example.isuyo_000.activities.UserData.UserList;
 
@@ -28,6 +29,20 @@ public class FrontLayout extends AppCompatActivity {
 
         user = getIntent().getParcelableExtra("selectedUser");
 
+        //Switch to GraphLayout
+        Button toGraphLayout = (Button) findViewById(R.id.toGraphLayout);
+
+        toGraphLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(getApplicationContext(), PlotGraph.class);
+                intent.putExtra("userSelected", user);
+                //TODO normalize default user in program
+                startActivity(intent);
+            }
+        });
+
+        //switch to UserList
         Button toUsersScreen = (Button) findViewById(R.id.toUsers);
 
         toUsersScreen.setOnClickListener(new View.OnClickListener(){
@@ -40,6 +55,8 @@ public class FrontLayout extends AppCompatActivity {
             }
         });
 
+
+        //Switch to UserSettings
         Button toSettingsScreen = (Button) findViewById(R.id.toSettings);
 
         toSettingsScreen.setOnClickListener(new View.OnClickListener(){

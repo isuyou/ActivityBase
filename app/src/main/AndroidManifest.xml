@@ -29,6 +29,10 @@
             android:label="@string/title_userList"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ChannelLimits"></activity>
+        <activity
+            android:name=".Graph.PlotGraph"
+            android:label="@string/title_userList"
+            android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 

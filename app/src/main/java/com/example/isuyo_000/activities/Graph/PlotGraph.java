@@ -60,7 +60,8 @@ public class PlotGraph extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.graph_page);
 
-
+        if (savedInstanceState.containsKey("coordinateData"));
+            Coordinates coordinate = savedInstanceState.getParcelable("coordinateData");
 
         //set up graph
         double y, x;

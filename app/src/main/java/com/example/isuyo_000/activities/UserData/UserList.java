@@ -4,6 +4,7 @@ package com.example.isuyo_000.activities.UserData;
  * Created by isuyo_000 on 8/4/2017.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,12 +23,16 @@ import java.util.ArrayList;
 public class UserList extends AppCompatActivity {
 
     private ArrayList<User> users= new ArrayList<>();
+    private User selectedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_menu);
 
+
+        //grabs data from previous activity
+        initializeData();
 
         //TODO initialize user entires
         attachUsers();
@@ -37,6 +42,14 @@ public class UserList extends AppCompatActivity {
 
     }
 
+    //grabs data from previous activity and pre-sets all internal variables before processing curretn activity
+    private void initializeData(){
+        selectedUser = getIntent().getParcelableExtra("selectedUser");
+    }
+
+
+    //default method placeholder
+    //TODO implement read from local data for stored user vlaues
     private void attachUsers(){
         users.add(new User(1, new double[]{4.2, 5.6, 2.4, 5.5}));
         users.add(new User(2, new double[]{4.2, 5.6, 2.4, 5.5}));
@@ -75,11 +88,25 @@ public class UserList extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             RelativeLayout line = (RelativeLayout) view;
+
             TextView textView = (TextView) line.findViewById(R.id.userID);
             String message = "you clicked # " + position +
-                    " which is string: " + textView .getText().toString();
+                    " user: " + textView .getText().toString();
             Toast.makeText(UserList.this, message, Toast.LENGTH_SHORT).show();
+
+            //changes selectedUser to the clicked item
+            selectedUser = users.get(position);
         }
+    }
+
+    //returns data to FrontLayout
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent();
+        intent.putExtra("userSelected", selectedUser);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
 

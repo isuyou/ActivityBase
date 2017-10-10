@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.isuyo_000.activities.Graph.GraphList;
-import com.example.isuyo_000.activities.Graph.PlotGraph;
+import com.example.isuyo_000.activities.UserData.Data;
 import com.example.isuyo_000.activities.UserData.User;
 import com.example.isuyo_000.activities.UserData.UserList;
 
@@ -94,6 +94,9 @@ public class FrontLayout extends AppCompatActivity {
                 //TODO settings method
             }
         }
+    }
+
+    public void storeJson(){
     }
 
 

@@ -2,6 +2,7 @@ package com.example.isuyo_000.activities.UserData;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
 
 /**
  * Created by isuyo_000 on 8/8/2017.
@@ -46,6 +47,8 @@ public class User implements Parcelable {
         this.limits = limits;
     }
 
+
+
     @Override
     public int describeContents(){
         return 0;
@@ -64,4 +67,5 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
 }

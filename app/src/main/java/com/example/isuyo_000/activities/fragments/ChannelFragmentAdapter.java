@@ -12,6 +12,7 @@ import android.text.style.ImageSpan;
 
 import com.example.isuyo_000.activities.MainActivity;
 import com.example.isuyo_000.activities.R;
+import com.example.isuyo_000.activities.UserData.PatientSettings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +27,18 @@ public class ChannelFragmentAdapter extends FragmentPagerAdapter {
 
     private Activity context;
 
-    private int[] imageResId;
+    private int numChannels;
 
-    {
-        imageResId = new int[]{
-        };
-    }
 
     private List<String> channelTabs = new ArrayList<>();
 
-    public ChannelFragmentAdapter(FragmentManager fm, Activity context) {
+    public ChannelFragmentAdapter(FragmentManager fm, Activity context, PatientSettings user) {
         super(fm);
         this.context = context;
-        channelTabs.add("1");
-        channelTabs.add("2");
-        channelTabs.add("3");
+        numChannels = user.channelsLimit;
+        for(int i = 1; i <= numChannels; i++){
+            channelTabs.add("" + i);
+        }
     }
 
     @Override

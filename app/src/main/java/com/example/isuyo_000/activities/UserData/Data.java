@@ -1,4 +1,4 @@
-package com.example.isuyo_000.activities;
+package com.example.isuyo_000.activities.UserData;
 
 /**
  * Created by isuyo_000 on 7/31/2017.
@@ -6,8 +6,8 @@ package com.example.isuyo_000.activities;
 
 //generic data structure to hold and store variables names and their associated values across activities
 public class Data<T> {
-    public String name;
-    public T value;
+    private String name;
+    private T value;
 
 
     public Data(String name, T input){
@@ -45,5 +45,11 @@ public class Data<T> {
         this.value = input;
 
     }
+
+    //Json formatting
+    public String toJsonString(){
+        return "{ \"name\":  }";
+    }
+
 
 }

@@ -59,9 +59,11 @@ public class ChannelFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view;
+        view = inflater.inflate(R.layout.activity_channel_limits, container, false);
+        /*
         switch (mPage) {
             case 1:
-                view = inflater.inflate(R.layout.activity_channel_limits, container, false);
+
                 break;
             case 2:
                 view = inflater.inflate(R.layout.activity_channel_limits, container, false);
@@ -70,6 +72,7 @@ public class ChannelFragment extends Fragment {
                 view = inflater.inflate(R.layout.activity_channel_limits, container, false);
                 break;
         }
+        */
         return view;
     }
 }

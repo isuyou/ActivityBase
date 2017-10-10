@@ -1,5 +1,7 @@
 package com.example.isuyo_000.activities;
 
+import com.example.isuyo_000.activities.UserData.Data;
+
 /**
  * Created by isuyo_000 on 7/31/2017.
  */

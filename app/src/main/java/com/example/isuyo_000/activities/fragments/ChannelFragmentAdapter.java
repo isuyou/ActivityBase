@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -24,7 +25,7 @@ import java.util.Map;
  * Created by isuyo_000 on 8/18/2017.
  */
 
-public class ChannelFragmentAdapter extends FragmentPagerAdapter {
+public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
     final int PAGE_COUNT = 3;
     private String[] tabTitles = new String[]{"Tab1", "Tab2", "Tab3"};
 
@@ -32,10 +33,17 @@ public class ChannelFragmentAdapter extends FragmentPagerAdapter {
 
     private int numChannels;
 
+    //Fragment tracking references
     private Map<Integer, String> tags;
+    private FragmentManager fragmentManager;
 
-
+    //Channel values holding
     private List<String> channelTabs = new ArrayList<>();
+    private List<Double> amplitudes = new ArrayList<>();
+    private List<Double> pulsewidths = new ArrayList<>();
+
+
+
 
     public ChannelFragmentAdapter(FragmentManager fm, Activity context, PatientSettings user) {
         super(fm);
@@ -45,6 +53,7 @@ public class ChannelFragmentAdapter extends FragmentPagerAdapter {
         for(int i = 1; i <= numChannels; i++){
             channelTabs.add("" + i);
         }
+        this.fragmentManager = fm;
     }
 
     @Override
@@ -74,6 +83,21 @@ public class ChannelFragmentAdapter extends FragmentPagerAdapter {
 
     //saves data of all current channels onto the disk
     public void save(){
+        //TODO
+        String tag;
+        ChannelFragment temp;
+        Channel currentChannel;
+        for(int i = 0; i < tags.size(); i++){
+            if( tags.get(i) != null){
+                tag = tags.get(i);
+                //TODO add in saving to file
+                temp = (ChannelFragment) fragmentManager.findFragmentByTag(tag);
+                currentChannel = temp.save();
+                amplitudes.add(currentChannel.getAmplitude());
+                pulsewidths.add(currentChannel.getPulsewidth());
+            }
+        }
+
 
     }
 }

@@ -96,10 +96,10 @@ public class ChannelFragment extends Fragment {
     //attaches listeners for the scrolling tab and the text
     private View attachSeekBarListener(View view){
         //references to screen objects
-        SeekBar amplitudeBar = (SeekBar) view.findViewById(R.id.AmplitudeBar);
-        EditText amplitudeValueText = (EditText) view.findViewById(R.id.AmplitudeValueIndicator);
-        SeekBar pulseWidthBar = (SeekBar) view.findViewById(R.id.PulseWidthBar);
-        EditText pulseWidthValueText = (EditText) view.findViewById(R.id.PulseWidthValueIndicator);
+        amplitudeBar = (SeekBar) view.findViewById(R.id.AmplitudeBar);
+        amplitudeValueText = (EditText) view.findViewById(R.id.AmplitudeValueIndicator);
+        pulseWidthBar = (SeekBar) view.findViewById(R.id.PulseWidthBar);
+        pulseWidthValueText = (EditText) view.findViewById(R.id.PulseWidthValueIndicator);
 
 
         //adds controller for the pulse width scrollBar
@@ -146,8 +146,8 @@ public class ChannelFragment extends Fragment {
     }
 
     //Saves data from the current onto the disk
-    private void save(){
-
+    public Channel save(){
+        return new Channel(amplitudeBar.getProgress(), pulseWidthBar.getProgress());
     }
 
 

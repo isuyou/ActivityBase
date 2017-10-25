@@ -24,7 +24,7 @@ public class JSonManager {
 
 
     //save data
-    private void saveData(AppCompatActivity activity, PatientSettings data){
+    public static void saveData(AppCompatActivity activity, PatientSettings data){
         createDirectory();
         Gson gson = new Gson();
         String s = gson.toJson(data);
@@ -43,7 +43,7 @@ public class JSonManager {
     }
 
     //read data from Json format
-    private void readData(AppCompatActivity activity, Context context){
+    public static void readData(AppCompatActivity activity, Context context){
         FileInputStream fis = null;
         //TODO error handling
         try {
@@ -71,7 +71,7 @@ public class JSonManager {
 
 
     //helper method to make a file within the target static directory
-    private File createDirectory(){
+    private static File createDirectory(){
 
         //TODO might need to check if directory already exists
         File dir = new File(directoryLocation);

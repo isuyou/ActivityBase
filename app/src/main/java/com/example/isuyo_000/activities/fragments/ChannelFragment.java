@@ -72,6 +72,7 @@ public class ChannelFragment extends Fragment {
             super.onCreate(savedInstanceState);
             mPage = getArguments().getInt(ARG_PAGE);
         }
+
     }
 
     //TODO add save button functionality
@@ -82,13 +83,15 @@ public class ChannelFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.activity_channel_limits, container, false);
         view = attachSeekBarListener(view);
+        attachButtonListeners(view);
 
         return view;
     }
 
     //sets the
-    private void setParent(ChannelFragmentAdapter parent){
+    private ChannelFragment setParent(ChannelFragmentAdapter parent){
         this.parent = parent;
+        return this;
     }
 
 

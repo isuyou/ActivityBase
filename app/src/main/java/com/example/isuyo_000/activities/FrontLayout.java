@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.example.isuyo_000.activities.Graph.GraphList;
 import com.example.isuyo_000.activities.UserData.Data;
+import com.example.isuyo_000.activities.UserData.PatientSettings;
+import com.example.isuyo_000.activities.UserData.PatientSettingsExample;
 import com.example.isuyo_000.activities.UserData.User;
 import com.example.isuyo_000.activities.UserData.UserList;
 
@@ -22,6 +24,7 @@ public class FrontLayout extends AppCompatActivity {
     private final static int settingsCode = 459;
 
     User user;
+    PatientSettings patientSettings;
     Data data;
 
     @Override
@@ -32,6 +35,9 @@ public class FrontLayout extends AppCompatActivity {
         //int age = getIntent().getIntExtra("user-age", -1);
 
         User p = (User) getIntent().getExtras().get("selectedUser");
+        patientSettings = (PatientSettings) getIntent().getExtras().get("patientSettings");
+        if(patientSettings == null)
+            patientSettings = PatientSettingsExample.createExamplePatient();
 
         user = getIntent().getParcelableExtra("selectedUser");
 
@@ -82,6 +88,7 @@ public class FrontLayout extends AppCompatActivity {
         if (requestCode == userListCode) {
             if(resultCode == RESULT_OK) {
                 //TODO userList method
+                this.patientSettings = data.getParcelableExtra("userSelectedSettings");
             }
         }
         else if(requestCode == graphLayoutCode) {

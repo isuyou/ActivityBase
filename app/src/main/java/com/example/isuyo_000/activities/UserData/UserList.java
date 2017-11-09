@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.isuyo_000.activities.JSon.JSonManager;
 import com.example.isuyo_000.activities.R;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class UserList extends AppCompatActivity {
 
     private ArrayList<User> users= new ArrayList<>();
     private User selectedUser;
+    private PatientSettings userSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +98,9 @@ public class UserList extends AppCompatActivity {
 
             //changes selectedUser to the clicked item
             selectedUser = users.get(position);
+
+            //sends the data of selected user back through the application
+            userSettings = loadData();
         }
     }
 
@@ -105,8 +110,13 @@ public class UserList extends AppCompatActivity {
     {
         Intent intent = new Intent();
         intent.putExtra("userSelected", selectedUser);
+        intent.putExtra("userSelectedSettings", userSettings);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public PatientSettings loadData(){
+        return JSonManager.readData(this, getApplicationContext());
     }
 }
 

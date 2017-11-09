@@ -32,4 +32,5 @@ dependencies {
     compile 'junit:junit:4.12'
     compile 'junit:junit:4.12'
     compile 'com.google.code.gson:gson:2.8.1'
+    compile group:  'com.opencsv', name: 'opencsv', version: '3.5'
 }

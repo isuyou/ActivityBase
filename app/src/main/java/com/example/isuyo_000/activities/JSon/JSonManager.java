@@ -32,7 +32,7 @@ public class JSonManager {
         FileOutputStream outputStream;
         //TODO Error Handling
         try {
-            outputStream = activity.openFileOutput(directoryLocation + "userData.txt", Context.MODE_PRIVATE);
+            outputStream = new FileOutputStream(new File(directoryLocation + "userData.txt"), true);
             outputStream.write(s.getBytes());
             outputStream.close();
         } catch (IOException e) {
@@ -43,11 +43,11 @@ public class JSonManager {
     }
 
     //read data from Json format
-    public static void readData(AppCompatActivity activity, Context context){
+    public static PatientSettings readData(AppCompatActivity activity, Context context){
         FileInputStream fis = null;
         //TODO error handling
         try {
-            fis = activity.getApplicationContext().openFileInput(directoryLocation + "userData.txt");
+            fis = new FileInputStream(new File(directoryLocation + "userData.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -67,6 +67,7 @@ public class JSonManager {
         String json = sb.toString();
         Gson gson = new Gson();
         PatientSettings data = gson.fromJson(json, PatientSettings.class);
+        return data;
     }
 
 

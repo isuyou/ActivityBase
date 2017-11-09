@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.example.isuyo_000.activities.JSon.JSonManager;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
 import com.example.isuyo_000.activities.UserData.PatientSettingsExample;
 import com.example.isuyo_000.activities.fragments.ChannelFragmentAdapter;
 import com.google.gson.Gson;
+import com.google.gson.annotations.JsonAdapter;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -57,6 +59,11 @@ public class ChannelLimits extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent( event );
+    }
+
+
+    public void loadData(){
+        user = JSonManager.readData(this, getApplicationContext());
     }
 
 

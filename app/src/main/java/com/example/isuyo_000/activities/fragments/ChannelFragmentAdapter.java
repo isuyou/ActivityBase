@@ -7,11 +7,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.view.ViewGroup;
 
+import com.example.isuyo_000.activities.CSV.CSVManager;
+import com.example.isuyo_000.activities.JSon.JSonManager;
 import com.example.isuyo_000.activities.MainActivity;
 import com.example.isuyo_000.activities.R;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
@@ -29,7 +32,7 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
     final int PAGE_COUNT = 3;
     private String[] tabTitles = new String[]{"Tab1", "Tab2", "Tab3"};
 
-    private Activity context;
+    private AppCompatActivity context;
 
     private int numChannels;
 
@@ -41,13 +44,15 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
     private List<String> channelTabs = new ArrayList<>();
     private List<Double> amplitudes = new ArrayList<>();
     private List<Double> pulsewidths = new ArrayList<>();
+    private PatientSettings user;
 
 
 
 
-    public ChannelFragmentAdapter(FragmentManager fm, Activity context, PatientSettings user) {
+    public ChannelFragmentAdapter(FragmentManager fm, AppCompatActivity context, PatientSettings user) {
         super(fm);
         this.context = context;
+        this.user = user;
         numChannels = user.channelsLimit;
         tags = new HashMap<>();
         for(int i = 1; i <= numChannels; i++){
@@ -98,6 +103,12 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
             }
         }
 
+        //CSVManager.createCSV();
+        JSonManager.saveData(context, user);
+    }
+
+    //loads data into all current channels on disk
+    public void load(){
 
     }
 }

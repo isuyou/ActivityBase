@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class ChannelFragmentListener {
 
-    protected final static double benchmarkModifier = 100.0;
+    protected final static double benchmarkModifier = 2.0;
 
     //listener class for the seek bars to allow them to change the editText values
     public static class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
@@ -38,7 +38,7 @@ public class ChannelFragmentListener {
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             double value = seekBar.getProgress();
-            target.setText("" + value/benchmarkModifier);
+            target.setText("" + value*benchmarkModifier/seekBar.getMax());
         }
     }
 
@@ -85,26 +85,30 @@ public class ChannelFragmentListener {
 
         //changes SeekBar value within bounds from the given number
         private void matchTarget(TextView textView){
+            double newValue = 0.0;
             try {
-                double newValue = Double.parseDouble(textView.getText().toString());
-                newValue = newValue * benchmarkModifier;
-                adjustTargetValue(newValue);
+                newValue = Double.parseDouble(textView.getText().toString());
+                newValue = newValue * target.getMax()/benchmarkModifier;
+                newValue = adjustTargetValue(newValue);
+
             }
             catch (Exception e){
-                adjustTargetValue(0.0);
+                newValue = adjustTargetValue(0.0);
             }
+            textView.setText("" + newValue*benchmarkModifier/target.getMax());
         }
 
         //finds the bounds of the seekbar and modifies the given number accordingly
-        private void adjustTargetValue(double newValue){
+        private double adjustTargetValue(double newValue){
             if(newValue > target.getMax()){
-                newValue = target.getMax();
+                newValue = target.getMax() + 0.0;
             }
             else if(newValue < 0.0){
                 newValue = 0.0;
             }
             int setValue = (int)newValue;
             target.setProgress(setValue);
+            return newValue;
         }
     }
 

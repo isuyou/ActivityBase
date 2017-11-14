@@ -1,13 +1,8 @@
 package com.example.isuyo_000.activities.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -16,8 +11,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.isuyo_000.activities.R;
-
-import org.w3c.dom.Text;
+import com.example.isuyo_000.activities.UserData.PatientSettings;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +28,7 @@ public class ChannelFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int mPage;
 
+
     //object references
     private SeekBar pulseWidthBar;
     private SeekBar amplitudeBar;
@@ -43,10 +38,11 @@ public class ChannelFragment extends Fragment {
     //parent adapter reference
     private ChannelFragmentAdapter parent;
 
+    //reference to overarching user/patient values
+    private PatientSettings user;
 
-
+    //proxy constructor
     public ChannelFragment() {
-        //proxy constructor
     }
 
     /**
@@ -56,12 +52,14 @@ public class ChannelFragment extends Fragment {
      * @return A new instance of fragment ChannelFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChannelFragment newInstance(int page, ChannelFragmentAdapter parent) {
+    public static ChannelFragment newInstance(int page, ChannelFragmentAdapter parent, PatientSettings user) {
         ChannelFragment fragment = new ChannelFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
+
         fragment.setArguments(args);
         fragment.setParent(parent);
+        fragment.setUser(user);
         return fragment;
     }
 
@@ -81,16 +79,22 @@ public class ChannelFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view;
-        view = inflater.inflate(R.layout.activity_channel_limits, container, false);
+        view = inflater.inflate(R.layout.settings_channel_limits, container, false);
         view = attachSeekBarListener(view);
         attachButtonListeners(view);
 
         return view;
     }
 
-    //sets the
+    //sets the parent adapter reference in the fragment
     private ChannelFragment setParent(ChannelFragmentAdapter parent){
         this.parent = parent;
+        return this;
+    }
+
+    //set the user values' reference in the fragment
+    private ChannelFragment setUser(PatientSettings user){
+        this.user = user;
         return this;
     }
 
@@ -104,13 +108,26 @@ public class ChannelFragment extends Fragment {
         pulseWidthBar = (SeekBar) view.findViewById(R.id.PulseWidthBar);
         pulseWidthValueText = (EditText) view.findViewById(R.id.PulseWidthValueIndicator);
 
+        int amplitudeBarScale = amplitudeBar.getMax();
+        int pulseWidthBarScale = pulseWidthBar.getMax();
 
-        //adds controller for the pulse width scrollBar
+        //initializes values for pulse width and amplitude bars/texts
+        double amplitudeValue = user.getAmplitudeLimits()[mPage];
+        amplitudeBar.setProgress((int) amplitudeValue * amplitudeBarScale);
+        amplitudeValueText.setText("" + amplitudeValue);
+
+        double pulseWidthValue = user.getPulsewidthLimits()[mPage];
+        pulseWidthBar.setProgress((int) pulseWidthValue * pulseWidthBarScale);
+        pulseWidthValueText.setText("" + pulseWidthValue);
+
+
+        //adds controller for the amplitude and pulse width scrollBar
         amplitudeBar.setOnSeekBarChangeListener(new ChannelFragmentListener.SeekBarListener(amplitudeValueText));
         amplitudeValueText.setOnEditorActionListener(new ChannelFragmentListener.EditorActionListener(amplitudeBar));
 
         pulseWidthBar.setOnSeekBarChangeListener(new ChannelFragmentListener.SeekBarListener(pulseWidthValueText));
         pulseWidthValueText.setOnEditorActionListener(new ChannelFragmentListener.EditorActionListener(pulseWidthBar));
+
         return view;
     }
 
@@ -139,18 +156,18 @@ public class ChannelFragment extends Fragment {
 
                 break;
             case 2:
-                view = inflater.inflate(R.layout.activity_channel_limits, container, false);
+                view = inflater.inflate(R.layout.settings_channel_limits, container, false);
                 break;
             default:
-                view = inflater.inflate(R.layout.activity_channel_limits, container, false);
+                view = inflater.inflate(R.layout.settings_channel_limits, container, false);
                 break;
         }
         */
     }
 
-    //Saves data from the current onto the disk
+    //Saves data from the current accessed channel onto the disk
     public Channel save(){
-        return new Channel(amplitudeBar.getProgress(), pulseWidthBar.getProgress());
+        return new Channel(amplitudeBar.getProgress(), amplitudeBar.getMax(), pulseWidthBar.getProgress(), pulseWidthBar.getMax());
     }
 
 

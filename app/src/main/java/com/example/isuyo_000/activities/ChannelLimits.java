@@ -24,12 +24,20 @@ import java.io.IOException;
 
 public class ChannelLimits extends AppCompatActivity {
 
-    PatientSettings user = PatientSettingsExample.createExamplePatient(1);
+    PatientSettings user;
+    String userFileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.channel_tab);
+
+        //retrieves the current user being looked at
+        userFileName =  getIntent().getStringExtra("userFileName");
+        if(userFileName != null)
+            user = loadData(userFileName);
+        else
+            user = PatientSettingsExample.createExamplePatient(1);
 
         // Get the viewpager and set its pageradapter so that it can display
         // items
@@ -62,8 +70,13 @@ public class ChannelLimits extends AppCompatActivity {
     }
 
 
-    public void loadData(){
-        user = JSonManager.readData(this, getApplicationContext());
+    public PatientSettings loadData(){
+        return JSonManager.readData(this, getApplicationContext());
+    }
+
+    public PatientSettings loadData(String userFileName){
+        //TODO use the reference to the user file name in the JSon manager
+        return JSonManager.readData(this,getApplicationContext());
     }
 
 

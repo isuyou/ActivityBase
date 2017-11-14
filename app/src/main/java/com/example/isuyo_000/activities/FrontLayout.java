@@ -25,6 +25,7 @@ public class FrontLayout extends AppCompatActivity {
 
     User user;
     PatientSettings patientSettings;
+    String userFileName;
     Data data;
 
     @Override
@@ -76,6 +77,7 @@ public class FrontLayout extends AppCompatActivity {
             public void onClick(View arg0){
                 Intent intent = new Intent(getApplicationContext(), ChannelLimits.class);
                 intent.putExtra("userSelected", user);
+                intent.putExtra("userFileName", userFileName);
                 //TODO normalize default user in program
                 startActivityForResult(intent, settingsCode);
             }
@@ -88,7 +90,7 @@ public class FrontLayout extends AppCompatActivity {
         if (requestCode == userListCode) {
             if(resultCode == RESULT_OK) {
                 //TODO userList method
-                this.patientSettings = data.getParcelableExtra("userSelectedSettings");
+                this.userFileName = data.getParcelableExtra("userFileName");
             }
         }
         else if(requestCode == graphLayoutCode) {

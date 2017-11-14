@@ -110,7 +110,7 @@ public class UserList extends AppCompatActivity {
     {
         Intent intent = new Intent();
         intent.putExtra("userSelected", selectedUser);
-        intent.putExtra("userSelectedSettings", userSettings);
+        intent.putExtra("userFileName", userSettings.getFileName());
         setResult(RESULT_OK, intent);
         finish();
     }

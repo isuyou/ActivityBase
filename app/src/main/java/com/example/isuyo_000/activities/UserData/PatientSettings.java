@@ -22,17 +22,7 @@ public class PatientSettings implements Parcelable{
     public PatientSettings(int id, double[][] channels, double[] amplitudeLimits, double[] pulsewidthLimits){
         this.id = id;
 
-        this.channels = new double[channelsLimit][];
-        double[] channel;
-        for(int i = 0; i < channelsLimit; i++){
-            //if channels are given; otherwise default to array of 0's
-            if(i < channels.length) {
-                changeChannelValues(i, channels[i]);
-            }
-            else{
-                this.channels[i] = new double[sizeLimit];
-            }
-        }
+        setAllChannelValues(channels);
 
         //sets amplitude initialization
         this.amplitudeLimits = new double[channelsLimit];
@@ -70,6 +60,20 @@ public class PatientSettings implements Parcelable{
         }
 
         this.channels[index] = newchannel;
+    }
+
+    //used to attribute all channel arrays to preset values
+    public void setAllChannelValues(double[][] channels) throws IllegalArgumentException{
+        this.channels = new double[channelsLimit][];
+        for(int i = 0; i < channelsLimit; i++){
+            //if channels are given; otherwise default to array of 0's
+            if(i < channels.length) {
+                changeChannelValues(i, channels[i]);
+            }
+            else{
+                this.channels[i] = new double[sizeLimit];
+            }
+        }
     }
 
     //sets all amplitude and channel defaults in the array to default values of 0
@@ -142,6 +146,11 @@ public class PatientSettings implements Parcelable{
     //returns the pulse width limits for specifiedd patient
     public double[] getPulsewidthLimits(){
         return pulsewidthLimits;
+    }
+
+    //returns effective file name for the patient to be saved as
+    public String getFileName(){
+        return "userPData" + id + ".txt";
     }
 
 

@@ -19,9 +19,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.45"
-        app:layout_constraintLeft_toRightOf="@+id/AmplitudeText"
-        android:layout_marginLeft="8dp"
+        app:layout_constraintVertical_bias="0.448"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/PulseWidthBar"
         app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
@@ -98,25 +98,24 @@
         android:id="@+id/PulseWidthValueIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="25dp"
         android:text="0.0"
-        app:layout_constraintHorizontal_bias="0.499"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PulseWidthText" />
+        app:layout_constraintTop_toBottomOf="@+id/PulseWidthText"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/PulseWidthBar"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/PulseWidthBar" />
 
     <EditText
         android:id="@+id/AmplitudeValueIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:text="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AmplitudeText" />
+        app:layout_constraintTop_toBottomOf="@+id/AmplitudeText"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/AmplitudeBar"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="@+id/AmplitudeBar" />
 
 </android.support.constraint.ConstraintLayout>

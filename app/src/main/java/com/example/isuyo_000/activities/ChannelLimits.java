@@ -10,8 +10,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.isuyo_000.activities.JSon.JSonManager;
+import com.example.isuyo_000.activities.JSon.JSonManagerException;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
 import com.example.isuyo_000.activities.UserData.PatientSettingsExample;
 import com.example.isuyo_000.activities.fragments.ChannelFragmentAdapter;
@@ -34,10 +36,14 @@ public class ChannelLimits extends AppCompatActivity {
 
         //retrieves the current user being looked at
         userFileName =  getIntent().getStringExtra("userFileName");
-        if(userFileName != null)
-            user = loadData(userFileName);
-        else
-            user = PatientSettingsExample.createExamplePatient(1);
+        if(userFileName != null) {
+             user = loadData(userFileName);
+            //user = PatientSettingsExample.createExamplePatient(1);
+        }
+        else {
+            user = loadData();
+            //user = PatientSettingsExample.createExamplePatient(1);
+        }
 
         // Get the viewpager and set its pageradapter so that it can display
         // items
@@ -71,12 +77,30 @@ public class ChannelLimits extends AppCompatActivity {
 
 
     public PatientSettings loadData(){
-        return JSonManager.readData(this, getApplicationContext());
+        PatientSettings userData;
+        try {
+            userData = JSonManager.readData(this, getApplicationContext());
+        }
+        catch(JSonManagerException e){
+            userData = PatientSettingsExample.createExamplePatient();
+        }
+        return userData;
     }
 
     public PatientSettings loadData(String userFileName){
         //TODO use the reference to the user file name in the JSon manager
-        return JSonManager.readData(this,getApplicationContext());
+        try {
+
+            return JSonManager.readData(this, this.getApplicationContext());
+
+        }
+        catch(JSonManagerException e){
+            Toast.makeText(getApplicationContext(),
+                    "Error type: " + e.getErrorType() + "\n" + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+
+            return PatientSettingsExample.createExamplePatient();
+        }
     }
 
 

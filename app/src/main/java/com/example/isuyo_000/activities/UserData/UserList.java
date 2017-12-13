@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.isuyo_000.activities.JSon.JSonManager;
+import com.example.isuyo_000.activities.JSon.JSonManagerException;
 import com.example.isuyo_000.activities.R;
 
 import java.util.ArrayList;
@@ -116,7 +117,17 @@ public class UserList extends AppCompatActivity {
     }
 
     public PatientSettings loadData(){
-        return JSonManager.readData(this, getApplicationContext());
+        try {
+            return JSonManager.readData(this, getApplicationContext());
+        }
+        catch (JSonManagerException e){
+            Toast.makeText(getApplicationContext(),
+                    "Error type: " + e.getErrorType() + "\n" + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+
+
+            return PatientSettingsExample.createExamplePatient();
+        }
     }
 }
 

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.example.isuyo_000.activities.R;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
 
+import java.util.concurrent.Callable;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -80,8 +82,14 @@ public class ChannelFragment extends Fragment {
         // Inflate the layout for this fragment
         View view;
         view = inflater.inflate(R.layout.settings_channel_limits, container, false);
-        view = attachSeekBarListener(view);
-        attachButtonListeners(view);
+        try {
+            view = attachSeekBarListener(view);
+            attachButtonListeners(view);
+        }
+        catch(Exception e){
+            System.out.println();
+        }
+
 
         return view;
     }
@@ -92,43 +100,55 @@ public class ChannelFragment extends Fragment {
         return this;
     }
 
-    //set the user values' reference in the fragment
+    //set the user values' reference in the fragment; also updates parents' trackers if possible
     private ChannelFragment setUser(PatientSettings user){
         this.user = user;
+        //updates adapter's amplitude and pulsewidth value trackers
+        if(parent != null){
+            parent.setAmplitudeValue(mPage, user.getAmplitudeLimits()[mPage]);
+            parent.setPulsewidthValue(mPage, user.getAmplitudeLimits()[mPage]);
+        }
         return this;
     }
 
 
 
     //attaches listeners for the scrolling tab and the text
-    private View attachSeekBarListener(View view){
-        //references to screen objects
-        amplitudeBar = (SeekBar) view.findViewById(R.id.AmplitudeBar);
-        amplitudeValueText = (EditText) view.findViewById(R.id.AmplitudeValueIndicator);
-        pulseWidthBar = (SeekBar) view.findViewById(R.id.PulseWidthBar);
-        pulseWidthValueText = (EditText) view.findViewById(R.id.PulseWidthValueIndicator);
+    private View attachSeekBarListener(View view) throws Exception{
+        try {
+            //references to screen objects
+            amplitudeBar = (SeekBar) view.findViewById(R.id.AmplitudeBar);
+            amplitudeValueText = (EditText) view.findViewById(R.id.AmplitudeValueIndicator);
+            pulseWidthBar = (SeekBar) view.findViewById(R.id.PulseWidthBar);
+            pulseWidthValueText = (EditText) view.findViewById(R.id.PulseWidthValueIndicator);
 
-        int amplitudeBarScale = amplitudeBar.getMax();
-        int pulseWidthBarScale = pulseWidthBar.getMax();
+            int amplitudeBarScale = amplitudeBar.getMax();
+            int pulseWidthBarScale = pulseWidthBar.getMax();
 
-        //initializes values for pulse width and amplitude bars/texts
-        double amplitudeValue = user.getAmplitudeLimits()[mPage];
-        amplitudeBar.setProgress((int) amplitudeValue * amplitudeBarScale);
-        amplitudeValueText.setText("" + amplitudeValue);
+            //initializes values for pulse width and amplitude bars/texts
+            double amplitudeValue = user.getAmplitudeLimits()[mPage];
+            int amplitude = (int) (amplitudeValue * amplitudeBarScale/ ChannelFragmentListener.benchmarkModifier);
+            amplitudeBar.setProgress(amplitude);
+            amplitudeValueText.setText("" + amplitudeValue);
 
-        double pulseWidthValue = user.getPulsewidthLimits()[mPage];
-        pulseWidthBar.setProgress((int) pulseWidthValue * pulseWidthBarScale);
-        pulseWidthValueText.setText("" + pulseWidthValue);
+            double pulseWidthValue = user.getPulsewidthLimits()[mPage];
+            pulseWidthBar.setProgress((int) (pulseWidthValue * pulseWidthBarScale / ChannelFragmentListener.benchmarkModifier));
+            pulseWidthValueText.setText("" + pulseWidthValue);
 
 
-        //adds controller for the amplitude and pulse width scrollBar
-        amplitudeBar.setOnSeekBarChangeListener(new ChannelFragmentListener.SeekBarListener(amplitudeValueText));
-        amplitudeValueText.setOnEditorActionListener(new ChannelFragmentListener.EditorActionListener(amplitudeBar));
+            //adds controller for the amplitude and pulse width scrollBar
+            amplitudeBar.setOnSeekBarChangeListener(new ChannelFragmentListener.SeekBarListener(amplitudeValueText, updateParentCall()));
+            amplitudeValueText.setOnEditorActionListener(new ChannelFragmentListener.EditorActionListener(amplitudeBar, updateParentCall()));
 
-        pulseWidthBar.setOnSeekBarChangeListener(new ChannelFragmentListener.SeekBarListener(pulseWidthValueText));
-        pulseWidthValueText.setOnEditorActionListener(new ChannelFragmentListener.EditorActionListener(pulseWidthBar));
+            pulseWidthBar.setOnSeekBarChangeListener(new ChannelFragmentListener.SeekBarListener(pulseWidthValueText, updateParentCall()));
+            pulseWidthValueText.setOnEditorActionListener(new ChannelFragmentListener.EditorActionListener(pulseWidthBar, updateParentCall()));
 
-        return view;
+            return view;
+        }
+        catch(Error e){
+            System.out.println(e.getCause());
+            throw e;
+        }
     }
 
     //attaches listeners and references to the buttons on the fragment page
@@ -146,7 +166,33 @@ public class ChannelFragment extends Fragment {
             }));
         }
 
+        if(parent != null){
+            finishButton.setOnClickListener(new ChannelFragmentListener.ButtonListener(new Executable() {
+                @Override
+                public void execute() {
+                    parent.save();
+                    parent.quit();
+                }
+            }));
+        }
+
         return view;
+    }
+
+    //updates channel values in parent
+    private void updateParent(){
+        parent.setAmplitudeValue(mPage, (amplitudeBar.getProgress() * 1.0)/(amplitudeBar.getMax() * 1.0));
+        parent.setPulsewidthValue(mPage, (pulseWidthBar.getProgress() * 1.0)/(pulseWidthBar.getMax() * 1.0));
+    }
+
+    //create's a calleable version of updateParent()
+    private Callable<Void> updateParentCall(){
+        return new Callable<Void>() {
+            public Void call(){
+                updateParent();
+                return null;
+            }
+        };
     }
 
     private void storedCode(){

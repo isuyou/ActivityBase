@@ -15,21 +15,21 @@ public class PatientSettingsExample {
         for(int i = 0; i < data.length; i++ ){
             data[i] = new double[PatientSettings.sizeLimit];
             for(int j = 0; j < data[i].length; j++){
-                data[i][j] = i + ((double)(j))/100.0;
+                data[i][j] = i/PatientSettings.sizeLimit + ((double)(j))/100.0;
             }
         }
 
         //contained data for channel amplitude limits
         double[] amplitudes = new double[PatientSettings.channelsLimit];
         for(int i = 0; i < data.length; i++){
-            amplitudes[i] = i/(data.length/2);
+            amplitudes[i] = (double)(i)/(data.length/2.0);
         }
 
 
         //contained data for channel pulse width limits
         double[] pulseWidths = new double[PatientSettings.channelsLimit];
         for(int i = 0; i < data.length; i++){
-            pulseWidths[i] = i/(data.length/2);
+            pulseWidths[i] = (double)(i)/(data.length/2.0);
         }
 
         return new PatientSettings(id, data, amplitudes, pulseWidths);

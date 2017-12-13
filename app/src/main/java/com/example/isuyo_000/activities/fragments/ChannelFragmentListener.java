@@ -9,20 +9,24 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.util.concurrent.Callable;
+
 /**
  * Created by McLovin on 10/12/2017.
  */
 
 public class ChannelFragmentListener {
 
-    protected final static double benchmarkModifier = 2.0;
+    public final static double benchmarkModifier = 2.0;
 
     //listener class for the seek bars to allow them to change the editText values
     public static class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
         TextView target;
+        Callable<Void> function;
 
-        public SeekBarListener(TextView target){
+        public SeekBarListener(TextView target, Callable<Void> function){
             this.target = target;
+            this.function = function;
         }
 
         @Override
@@ -39,6 +43,12 @@ public class ChannelFragmentListener {
         public void onStopTrackingTouch(SeekBar seekBar) {
             double value = seekBar.getProgress();
             target.setText("" + value*benchmarkModifier/seekBar.getMax());
+            try {
+                function.call();
+            }
+            catch(Exception e){
+
+            }
         }
     }
 
@@ -65,8 +75,12 @@ public class ChannelFragmentListener {
     //listener class for the edit text items to change seekBar values once the user has finished editing the text
     public static class EditorActionListener implements EditText.OnEditorActionListener{
         SeekBar target;
+        Callable<Void> function;
 
-        public EditorActionListener(SeekBar target){    this.target = target; }
+        public EditorActionListener(SeekBar target, Callable<Void> function){
+            this.target = target;
+            this.function = function;
+        }
 
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -96,6 +110,12 @@ public class ChannelFragmentListener {
                 newValue = adjustTargetValue(0.0);
             }
             textView.setText("" + newValue*benchmarkModifier/target.getMax());
+            try {
+                function.call();
+            }
+            catch(Exception e){
+
+            }
         }
 
         //finds the bounds of the seekbar and modifies the given number accordingly

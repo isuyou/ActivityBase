@@ -12,7 +12,7 @@ public class Channel {
 
 
     public Channel(double amplitude, double amplitudescale,  double pulsewidth, double pulsewidthscale){
-        this.amplitude = (amplitude * 1.0)/(amplitude * 1.0);
+        this.amplitude = (amplitude * 1.0)/(amplitudescale * 1.0);
         this.pulsewidth = (pulsewidth* 1.0)/ (pulsewidthscale *1.0);
     }
 

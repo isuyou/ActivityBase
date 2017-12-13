@@ -10,6 +10,7 @@ import com.example.isuyo_000.activities.JSon.JSonManager;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,8 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
     private List<String> channelTabs = new ArrayList<>();
     private List<Double> amplitudes = new ArrayList<>();
     private List<Double> pulsewidths = new ArrayList<>();
+    private double[] amplitudeValues;
+    private double[] pulsewidthValues;
     private PatientSettings user;
 
 
@@ -44,12 +47,15 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
         this.context = context;
         this.user = user;
         numChannels = user.channelsLimit;
+        amplitudeValues = user.getAmplitudeLimits();
+        pulsewidthValues = user.getPulsewidthLimits();
         tags = new HashMap<>();
         for(int i = 1; i <= numChannels; i++){
             channelTabs.add("" + i);
         }
         this.fragmentManager = fm;
     }
+
 
     @Override
     public int getCount() {
@@ -58,7 +64,7 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ChannelFragment.newInstance(position + 1, this, user);
+        return ChannelFragment.newInstance(position, this, user);
     }
 
     @Override
@@ -77,28 +83,50 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
     }
 
     //saves data of all current channels onto the disk
-    public void save(){
-        //TODO
-        String tag;
-        ChannelFragment temp;
-        Channel currentChannel;
-        for(int i = 0; i < tags.size(); i++){
-            if( tags.get(i) != null){
-                tag = tags.get(i);
-                //TODO add in saving to file
-                temp = (ChannelFragment) fragmentManager.findFragmentByTag(tag);
-                currentChannel = temp.save();
-                amplitudes.add(currentChannel.getAmplitude());
-                pulsewidths.add(currentChannel.getPulseWidth());
-            }
-        }
+    public void save() {
+        amplitudes = asList(amplitudeValues);
+        pulsewidths = asList(pulsewidthValues);
 
-        //CSVManager.createCSV();
+        user.setAmplitudeLimits(amplitudes);
+        user.setPulsewidthLimits(pulsewidths);
         JSonManager.saveData(context, user);
     }
 
     //loads data into all current channels on disk
     public void load(){
 
+    }
+
+    //quits out of the adapter with desired data
+    public void quit(){
+        context.finish();
+    }
+
+
+
+
+    //sets amplitude and pulse width values of selected channel
+    public void setAmplitudeValue(int position, double value) throws ArrayIndexOutOfBoundsException{
+        if(position > amplitudeValues.length){
+            throw new ArrayIndexOutOfBoundsException("channel number too large: Does Not Exist in current context");
+        }
+        amplitudeValues[position] = value;
+    }
+
+    public void setPulsewidthValue(int position, double value) throws ArrayIndexOutOfBoundsException{
+        if(position > pulsewidthValues.length){
+            throw new ArrayIndexOutOfBoundsException("channel number too large: Does Not Exist in current context");
+        }
+        pulsewidthValues[position] = value;
+
+    }
+
+    //creates list of Doubule from array of double
+    public List<Double> asList(double[] array){
+        ArrayList<Double> output = new ArrayList<>();
+        for(double value : array){
+            output.add(value);
+        }
+        return output;
     }
 }

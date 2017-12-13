@@ -5,7 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.isuyo_000.activities.UserData.Data;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
+import com.example.isuyo_000.activities.UserData.PatientSettingsExample;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.MalformedJsonException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 
 /**
  * Created by McLovin on 9/22/2017.
@@ -32,7 +36,11 @@ public class JSonManager {
         FileOutputStream outputStream;
         //TODO Error Handling
         try {
-            outputStream = new FileOutputStream(new File(directoryLocation + "userData.txt"), true);
+            File file = new File(directoryLocation + "userData.txt");
+            boolean deleted = false;
+            if(file.exists())
+                deleted = file.delete();
+            outputStream = new FileOutputStream(file, true);
             outputStream.write(s.getBytes());
             outputStream.close();
         } catch (IOException e) {
@@ -43,13 +51,14 @@ public class JSonManager {
     }
 
     //read data from Json format
-    public static PatientSettings readData(AppCompatActivity activity, Context context){
+    public static PatientSettings readData(AppCompatActivity activity, Context context) throws JSonManagerException{
         FileInputStream fis = null;
         //TODO error handling
         try {
             fis = new FileInputStream(new File(directoryLocation + "userData.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            throw new JSonManagerException(JSonManagerException.ErrorType.File, "file did not load properly", e.getMessage());
         }
         InputStreamReader isr = new InputStreamReader(fis);
         BufferedReader bufferedReader = new BufferedReader(isr);
@@ -62,11 +71,21 @@ public class JSonManager {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            throw new JSonManagerException(JSonManagerException.ErrorType.File, "file did not read properly", e.getMessage());
         }
 
         String json = sb.toString();
+        JsonReader reader = new JsonReader(new StringReader(json));
+        reader.setLenient(true);
         Gson gson = new Gson();
-        PatientSettings data = gson.fromJson(json, PatientSettings.class);
+        PatientSettings data;
+        try {
+            data = gson.fromJson(reader, PatientSettings.class);
+        }
+        catch(Exception e){
+            throw new JSonManagerException(JSonManagerException.ErrorType.JSonParsing, "file was malformed", e.getMessage());
+        }
+
         return data;
     }
 

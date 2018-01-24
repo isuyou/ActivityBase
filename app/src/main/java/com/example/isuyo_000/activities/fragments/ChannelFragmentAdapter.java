@@ -10,7 +10,6 @@ import com.example.isuyo_000.activities.JSon.JSonManager;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
     final int PAGE_COUNT = 3;
     private String[] tabTitles = new String[]{"Tab1", "Tab2", "Tab3"};
 
-    private AppCompatActivity context;
+    private AppCompatActivity activityContext;
 
     private int numChannels;
 
@@ -42,9 +41,9 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
 
 
 
-    public ChannelFragmentAdapter(FragmentManager fm, AppCompatActivity context, PatientSettings user) {
+    public ChannelFragmentAdapter(FragmentManager fm, AppCompatActivity activityContext, PatientSettings user) {
         super(fm);
-        this.context = context;
+        this.activityContext = activityContext;
         this.user = user;
         numChannels = user.channelsLimit;
         amplitudeValues = user.getAmplitudeLimits();
@@ -89,7 +88,7 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
 
         user.setAmplitudeLimits(amplitudes);
         user.setPulsewidthLimits(pulsewidths);
-        JSonManager.saveData(context, user);
+        JSonManager.saveData(activityContext, user);
     }
 
     //loads data into all current channels on disk
@@ -99,7 +98,7 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
 
     //quits out of the adapter with desired data
     public void quit(){
-        context.finish();
+        activityContext.finish();
     }
 
 
@@ -108,14 +107,14 @@ public class ChannelFragmentAdapter extends FragmentStatePagerAdapter {
     //sets amplitude and pulse width values of selected channel
     public void setAmplitudeValue(int position, double value) throws ArrayIndexOutOfBoundsException{
         if(position > amplitudeValues.length){
-            throw new ArrayIndexOutOfBoundsException("channel number too large: Does Not Exist in current context");
+            throw new ArrayIndexOutOfBoundsException("channel number too large: Does Not Exist in current activityContext");
         }
         amplitudeValues[position] = value;
     }
 
     public void setPulsewidthValue(int position, double value) throws ArrayIndexOutOfBoundsException{
         if(position > pulsewidthValues.length){
-            throw new ArrayIndexOutOfBoundsException("channel number too large: Does Not Exist in current context");
+            throw new ArrayIndexOutOfBoundsException("channel number too large: Does Not Exist in current activityContext");
         }
         pulsewidthValues[position] = value;
 

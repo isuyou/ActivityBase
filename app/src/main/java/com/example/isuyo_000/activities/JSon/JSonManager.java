@@ -28,6 +28,14 @@ public class JSonManager {
 
 
     //save data
+    /**
+     * creates a file with a PatientSettings formated user data into a Json formatted file
+     *@param activity the reference to the specific activity/screen that calls the method
+     *@param data the specific patient data to save into a Json formatted file
+     *@return void after method called either:
+     *      file has correctly been saved with patient data to /sdcard/hybrid_app/userData#.txt
+     *      no change has been made: Error messagelogged
+     */
     public static void saveData(AppCompatActivity activity, PatientSettings data){
         createDirectory();
         Gson gson = new Gson();
@@ -51,6 +59,13 @@ public class JSonManager {
     }
 
     //read data from Json format
+    /**
+     * retrieves a file with a PatientSettings formmated user data inot a Json formatted file
+     *@param activity the reference to the specific activity/screen that calls the method
+     *@param context reference to application context that file is being read to
+     *@return PatientSetting converted object of patient data from file
+     *      otherwise: error has occurred and JSonManagerException thrown
+     */
     public static PatientSettings readData(AppCompatActivity activity, Context context) throws JSonManagerException{
         FileInputStream fis = null;
         //TODO error handling
@@ -91,6 +106,12 @@ public class JSonManager {
 
 
     //helper method to make a file within the target static directory
+
+    /**
+     * createDirectory()
+     * @return returns the fileName and location of the filepath prefix
+     * Creates the necessary folders/directories before returning full filepath prefix
+     */
     private static File createDirectory(){
 
         //TODO might need to check if directory already exists

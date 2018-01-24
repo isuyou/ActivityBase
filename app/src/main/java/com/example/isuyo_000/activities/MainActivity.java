@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.example.isuyo_000.activities.UserData.User;
 
+//Activity representing first screen loaded when starting app; can be used as title/info screen
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button toActivityTwo = (Button) findViewById(R.id.toActivityTwo);
 
+        //attaches listener to button to move to next activity
         toActivityTwo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0){

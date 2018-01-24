@@ -29,12 +29,15 @@ public class ChannelLimits extends AppCompatActivity {
     PatientSettings user;
     String userFileName;
 
+    /**standard creation of Activity for android apps
+     * initializes global variables and attaches adapters and layout items
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.channel_tab);
 
-        //retrieves the current user being looked at
+        //retrieves the PatientSettings data current user being looked at, then puts data into local userData variable
         userFileName =  getIntent().getStringExtra("userFileName");
         if(userFileName != null) {
              user = loadData(userFileName);
@@ -58,6 +61,7 @@ public class ChannelLimits extends AppCompatActivity {
     }
 
 
+    //press-down listener to exit the keyboard setting when a press is made outside the keyboard
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -76,6 +80,10 @@ public class ChannelLimits extends AppCompatActivity {
     }
 
 
+    /**
+     * returns PatientSettings data retrieved from default file
+     * @return PatientSettings data retrieved
+     */
     public PatientSettings loadData(){
         PatientSettings userData;
         try {
@@ -87,6 +95,11 @@ public class ChannelLimits extends AppCompatActivity {
         return userData;
     }
 
+    /**
+     *returns PatientSettings data retrieved from selected file
+     * @param userFileName selected file by JSonManager filename protocol
+     * @return PatientSettings data retrieved
+     */
     public PatientSettings loadData(String userFileName){
         //TODO use the reference to the user file name in the JSon manager
         try {

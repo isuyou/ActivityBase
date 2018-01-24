@@ -15,6 +15,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
@@ -471,7 +472,7 @@ public class PlotGraph extends AppCompatActivity {
             if(yPos < minY)
                 yPos = minY;
             dataPoints.set(selectedIndex, new DataPoint(xPos, yPos));
-            dataPoints.sort(DataPointComparator);
+            Collections.sort(dataPoints,DataPointComparator);
             graph.removeAllSeries();
             //adds all old points plus new point to the graph
             LineGraphSeries lineGraph = new LineGraphSeries<DataPoint>();

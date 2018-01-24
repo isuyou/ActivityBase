@@ -13,9 +13,7 @@ import com.example.isuyo_000.activities.UserData.PatientSettingsExample;
 import com.example.isuyo_000.activities.UserData.User;
 import com.example.isuyo_000.activities.UserData.UserList;
 
-/**
- * Created by isuyo_000 on 7/31/2017.
- */
+
 
 public class FrontLayout extends AppCompatActivity {
 
@@ -29,6 +27,10 @@ public class FrontLayout extends AppCompatActivity {
     Data data;
 
     @Override
+    /**
+     * called when activity is started
+     * initializes activity settings and attaches listeners to buttons
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.front_layout);
@@ -84,7 +86,13 @@ public class FrontLayout extends AppCompatActivity {
         });
     }
 
-    //handles data being passed back
+    /**
+     * called when the child activity from startActivityForResult(intent, code) is ended
+     * handles data being passed back
+     * @param requestCode the identifying integer indicating which activity data was received from
+     * @param resultCode the status of how the activity was ended (forced or manually ended)
+     * @param data the data being passed back to the parent activity bundled in Intent format
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == userListCode) {

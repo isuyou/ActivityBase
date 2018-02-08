@@ -3,12 +3,9 @@ package com.example.isuyo_000.activities.JSon;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.isuyo_000.activities.UserData.Data;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
-import com.example.isuyo_000.activities.UserData.PatientSettingsExample;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.MalformedJsonException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -96,6 +93,7 @@ public class JSonManager {
         PatientSettings data;
         try {
             data = gson.fromJson(reader, PatientSettings.class);
+            reader.close();
         }
         catch(Exception e){
             throw new JSonManagerException(JSonManagerException.ErrorType.JSonParsing, "file was malformed", e.getMessage());

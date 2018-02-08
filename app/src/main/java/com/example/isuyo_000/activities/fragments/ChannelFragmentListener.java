@@ -1,4 +1,4 @@
-package com.example.isuyo_000.activities.fragments;
+package com.example.isuyo_000.activities.Fragments;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -132,10 +132,10 @@ public class ChannelFragmentListener {
         }
     }
 
-    //finds the bounds
+    //attaches a 'function'  executable to specific clickable button
     public static class ButtonListener implements View.OnClickListener{
         Executable ex;
-        ButtonListener(Executable ex)
+        public ButtonListener(Executable ex)
         {
             this.ex = ex;
         }

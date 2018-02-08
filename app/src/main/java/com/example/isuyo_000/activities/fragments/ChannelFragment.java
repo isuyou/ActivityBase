@@ -1,4 +1,4 @@
-package com.example.isuyo_000.activities.fragments;
+package com.example.isuyo_000.activities.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

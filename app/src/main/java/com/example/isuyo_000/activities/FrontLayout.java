@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.isuyo_000.activities.Graph.GraphList;
-import com.example.isuyo_000.activities.UserData.Data;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
 import com.example.isuyo_000.activities.UserData.PatientSettingsExample;
 import com.example.isuyo_000.activities.UserData.User;
@@ -24,7 +23,6 @@ public class FrontLayout extends AppCompatActivity {
     User user;
     PatientSettings patientSettings;
     String userFileName;
-    Data data;
 
     @Override
     /**

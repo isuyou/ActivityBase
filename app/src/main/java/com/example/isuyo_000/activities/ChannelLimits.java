@@ -16,7 +16,7 @@ import com.example.isuyo_000.activities.JSon.JSonManager;
 import com.example.isuyo_000.activities.JSon.JSonManagerException;
 import com.example.isuyo_000.activities.UserData.PatientSettings;
 import com.example.isuyo_000.activities.UserData.PatientSettingsExample;
-import com.example.isuyo_000.activities.fragments.ChannelFragmentAdapter;
+import com.example.isuyo_000.activities.Fragments.ChannelFragmentAdapter;
 import com.google.gson.Gson;
 import com.google.gson.annotations.JsonAdapter;
 

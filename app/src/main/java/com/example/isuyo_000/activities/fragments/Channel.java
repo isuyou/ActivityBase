@@ -1,4 +1,4 @@
-package com.example.isuyo_000.activities.fragments;
+package com.example.isuyo_000.activities.Fragments;
 
 /**
  * Created by McLovin on 10/24/2017.

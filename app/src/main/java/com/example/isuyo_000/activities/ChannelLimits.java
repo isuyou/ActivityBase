@@ -37,6 +37,8 @@ public class ChannelLimits extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.channel_tab);
 
+        user = PatientSettingsExample.createExamplePatient();
+
         //retrieves the PatientSettings data current user being looked at, then puts data into local userData variable
         userFileName =  getIntent().getStringExtra("userFileName");
         if(userFileName != null) {
